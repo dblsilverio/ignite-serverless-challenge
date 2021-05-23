@@ -51,7 +51,8 @@ functions:
           path: /todos/{userId}
           method: GET
           cors: true
-    - Effect: Allow
+    iamRoleStatements:
+      - Effect: Allow
         Action:
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE_NAME}/index/${self:provider.environment.IX_TODO_USER_ID}

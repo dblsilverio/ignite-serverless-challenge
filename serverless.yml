@@ -1,4 +1,4 @@
-service: ignite-certificate
+service: todo-service
 
 package:
   individually: true

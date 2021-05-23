@@ -22,7 +22,6 @@ export class TodoDynamoRepository implements ITodoRepository {
     }
 
     async findBy(userId: string): Promise<ITODO[]> {
-        console.log(this.byUserIndex)
         const result = await this.documentClient.query({
             TableName: this.tableName,
             IndexName: this.byUserIndex,
@@ -33,7 +32,6 @@ export class TodoDynamoRepository implements ITodoRepository {
 
         }).promise()
 
-        console.log(result.Items)
         if (result.Count !== 0) {
             return result.Items as ITODO[]
         }

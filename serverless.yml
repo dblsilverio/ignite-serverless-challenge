@@ -39,6 +39,11 @@ functions:
           path: /todos/{userId}
           method: POST
           cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE_NAME}
   getTodosByUserID:
     handler: src/functions/todo/getByUser/handler.main
     events:
@@ -46,6 +51,11 @@ functions:
           path: /todos/{userId}
           method: GET
           cors: true
+    - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE_NAME}/index/${self:provider.environment.IX_TODO_USER_ID}
+
 
 resources:
   Resources:
@@ -71,7 +81,3 @@ resources:
                 KeyType: HASH
             Projection:
               ProjectionType: ALL
-
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
